@@ -6,7 +6,7 @@ namespace Farm
     {
         static void Main(string[] args)
         {
-            Animal dog = new Animal();
+            Dog dog = new Dog();
             dog.Bark();
             dog.Bark();
         }
