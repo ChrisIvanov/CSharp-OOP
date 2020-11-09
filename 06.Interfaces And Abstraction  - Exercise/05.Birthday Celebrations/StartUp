@@ -1,0 +1,87 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using BorderControl.Models;
+using BorderControl.Contracts;
+
+namespace BorderControl
+{
+    public class StartUp
+    {
+        static void Main(string[] args)
+        {
+            string[] command = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+            List<Citizen> citizens = new List<Citizen>();
+            List<Robot> robots = new List<Robot>();
+            List<Pet> pets = new List<Pet>();
+            bool isEnded = false;
+
+
+            while (!isEnded)
+            {
+                if (command[0] == "Citizen")
+                {
+                    string citizenName = command[1];
+                    int citizenAge = int.Parse(command[2]);
+                    string citizenId = command[3];
+                    string citizenBirthdate = command[4];
+
+                    Citizen citizen = new Citizen(citizenName, citizenAge, citizenId, citizenBirthdate);
+
+                    citizens.Add(citizen);
+                }
+                else if (command[0] == "Robot")
+                {
+                    string robotName = command[1];
+                    string robotId = command[2];
+
+                    Robot robot = new Robot(robotName, robotId);
+
+                    robots.Add(robot);
+                }
+                else if (command[0] == "Pet")
+                {
+                    string petName = command[1];
+                    string petBirthdate = command[2];
+
+                    Pet pet = new Pet(petName, petBirthdate);
+
+                    pets.Add(pet);
+                }
+
+                if (command[0] == "End")
+                {
+                    isEnded = true;
+                    string yearOfBirth = Console.ReadLine();
+
+                    foreach (var citizen in citizens)
+                    {
+                        string citizensIds = citizen.Birthdate.Substring
+                            (citizen.Id.Length - yearOfBirth.Length, yearOfBirth.Length);
+
+                        if (citizensIds == yearOfBirth)
+                        {
+                            Console.WriteLine(citizen.Birthdate);
+                        }
+                    }
+
+                    foreach (var pet in pets)
+                    {
+                        string petsBirthday = pet.Birthdate.Substring
+                            (pet.Birthdate.Length - yearOfBirth.Length, yearOfBirth.Length);
+
+                        if (petsBirthday == yearOfBirth)
+                        {
+                            Console.WriteLine(pet.Birthdate);
+                        }
+                    }
+
+                    break;
+                }
+
+                command = Console.ReadLine().Split(" ").ToArray();
+            }
+        }
+    }
+}
