@@ -1,0 +1,14 @@
+using BorderControl.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BorderControl.Contracts
+{
+    public interface IRobot
+    {
+        string Model { get; }
+        string Id { get; }
+        List<Robot> Robots { get; }
+    }
+}
