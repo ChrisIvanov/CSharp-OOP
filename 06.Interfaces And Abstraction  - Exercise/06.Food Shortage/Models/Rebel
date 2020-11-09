@@ -1,0 +1,29 @@
+using BorderControl.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BorderControl.Models
+{
+    public class Rebel : IBuyer
+    {
+
+        public Rebel(string name, int age, string group)
+        {
+            this.Name = name;
+            this.Age = age;
+            this.Group = group;
+        }
+        
+        public string Name { get; }
+        public int Age { get; }
+        public string Group { get; }
+        public List<Rebel> Rebels { get; }
+        public int Food { get; set; }
+        public void BuyFood()
+        {
+            int food = 5;
+            this.Food += food;
+        }
+    }
+}
