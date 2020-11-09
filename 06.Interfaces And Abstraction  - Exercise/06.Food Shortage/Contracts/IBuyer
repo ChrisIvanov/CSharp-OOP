@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BorderControl.Contracts
+{
+    public interface IBuyer
+    {
+        virtual int Food 
+        { 
+            get
+            { 
+                return this.Food; 
+            }
+            set 
+            {
+                this.Food = value;
+            }
+        }
+        void BuyFood();
+    }
+}
