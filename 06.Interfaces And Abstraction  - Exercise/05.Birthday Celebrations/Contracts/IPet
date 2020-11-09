@@ -1,0 +1,14 @@
+using BorderControl.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BorderControl.Contracts
+{
+    public interface IPet
+    {
+        string Name { get; }
+        string Birthdate { get; }
+        List<Pet> Pets { get; }
+    }
+}
