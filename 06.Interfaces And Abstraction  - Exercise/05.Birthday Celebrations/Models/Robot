@@ -1,0 +1,22 @@
+using BorderControl.Contracts;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BorderControl.Models
+{
+    public class Robot : IRobot
+    {
+        public Robot(string model, string id)
+        {
+            this.Model = model;
+            this.Id = id;
+            this.Robots = new List<Robot>();
+        }
+
+        public string Model { get; }
+        public string Id { get; }
+        public List<Robot> Robots { get; }
+    }
+}
