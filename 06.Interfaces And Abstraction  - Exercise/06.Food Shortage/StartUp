@@ -1,0 +1,90 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using BorderControl.Models;
+using BorderControl.Contracts;
+
+namespace BorderControl
+{
+    public class StartUp
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+            List<Citizen> citizens = new List<Citizen>();
+            List<Rebel> rebels = new List<Rebel>();
+
+            for (int i = 0; i < n; i++)
+            {
+                string[] command = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+                if (command.Length == 4)
+                {
+                    //citizen
+                    string citizenName = command[0];
+                    int citizenAge = int.Parse(command[1]);
+                    string citizenId = command[2];
+                    string citizenBirthdate = command[3];
+
+                    Citizen citizen = new Citizen(citizenName, citizenAge, citizenId, citizenBirthdate);
+                    citizens.Add(citizen);
+                }
+                else if (command.Length == 3)
+                {
+                    //rebel
+                    string rebelName = command[0];
+                    int rebelAge = int.Parse(command[1]);
+                    string rebelGroup = command[2];
+
+                    Rebel rebel = new Rebel(rebelName, rebelAge, rebelGroup);
+                    rebels.Add(rebel);
+                }
+            }
+
+            int citizenFood = 0;
+            int rebelFood = 0;
+
+            bool isEnded = false;
+            while (!isEnded)
+            {
+                string name = Console.ReadLine();
+
+                if (name == "End")
+                {
+                    isEnded = true;
+                    break;
+                }
+
+                foreach (var citizen in citizens)
+                {
+                    if (citizen.Name == name)
+                    {
+                        citizen.BuyFood();
+                    }
+                }
+
+                foreach (var rebel in rebels)
+                {
+                    if (rebel.Name == name)
+                    {
+                        rebel.BuyFood();
+                    } 
+                }
+            }
+
+            int totalFood = 0;
+
+            foreach (var citizen in citizens)
+            {
+                totalFood += citizen.Food;
+            }
+
+            foreach (var rebel in rebels)
+            {
+                totalFood += rebel.Food;
+            }
+            
+            Console.WriteLine(totalFood);
+        }
+    }
+}
