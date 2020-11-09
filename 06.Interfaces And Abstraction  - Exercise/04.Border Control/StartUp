@@ -1,0 +1,75 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using BorderControl.Models;
+using BorderControl.Contracts;
+
+namespace BorderControl
+{
+    public class StartUp
+    {
+        static void Main(string[] args)
+        {
+            string[] command = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+            List<Citizen> citizens = new List<Citizen>();
+            List<Robot> robots = new List<Robot>();
+            bool isEnded = false;
+
+            while (!isEnded)
+            {
+                if (command.Length > 2)
+                {
+                    string citizenName = command[0];
+                    int citizenAge = int.Parse(command[1]);
+                    string citizenId = command[2];
+
+                    Citizen citizen = new Citizen(citizenName, citizenAge, citizenId);
+
+                    citizens.Add(citizen);
+                }
+                else if (command.Length == 2)
+                {
+                    string robotName = command[0];
+                    string robotId = command[1];
+
+                    Robot robot = new Robot(robotName, robotId);
+
+                    robots.Add(robot);
+                }
+
+                if (command[0] == "End")
+                {
+                    isEnded = true;
+                    string fakeId = Console.ReadLine();
+
+                    foreach (var citizen in citizens)
+                    {
+                        string citizensIds = citizen.Id.Substring
+                            (citizen.Id.Length - fakeId.Length, fakeId.Length);
+
+                        if (citizensIds == fakeId)
+                        {
+                            Console.WriteLine(citizen.Id);
+                        }
+                    }
+
+                    foreach (var robot in robots)
+                    {
+                        string robotsIds = robot.Id.Substring
+                            (robot.Id.Length - fakeId.Length, fakeId.Length);
+
+                        if (robotsIds == fakeId)
+                        {
+                            Console.WriteLine(robot.Id);
+                        }
+                    }
+
+                    break;
+                }
+
+                command = Console.ReadLine().Split(" ").ToArray();
+            }
+        }
+    }
+}
