@@ -1,0 +1,26 @@
+using BorderControl.Contracts;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BorderControl.Models
+{
+    public class Citizen : ICitizen
+    {
+        public Citizen(string name, int age, string id, string birthdate)
+        {
+            this.Name = name;
+            this.Age = age;
+            this.Id = id;
+            this.Birthdate = birthdate;
+            this.Citizens = new List<Citizen>();
+        }
+
+        public string Name { get; }
+        public int Age { get; }
+        public string Id { get; }
+        public string Birthdate { get; }
+        public List<Citizen> Citizens { get; }
+    }
+}
