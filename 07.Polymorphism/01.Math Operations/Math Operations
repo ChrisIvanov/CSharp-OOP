@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Operations
+{
+    public class MathOperations
+    {
+        public int Add(int firstNum, int secondNum)
+        {
+            int sum = firstNum + secondNum;
+            return sum;
+        }
+
+        public double Add(double firstNum, double secondNum, double thirdNum)
+        {
+            double sum = firstNum + secondNum + thirdNum;
+            return sum;
+        }
+
+        public decimal Add(decimal firstNum, decimal secondNum, decimal thirdNum)
+        {
+            decimal sum = firstNum + secondNum + thirdNum;
+            return sum;
+        }
+    }
+}
