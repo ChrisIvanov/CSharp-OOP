@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+
+namespace Stealer
+{
+    public class Spy
+    {
+        public string StealFieldInfo(string classToInvestigate, params string[] fieldsNames)
+        {
+            Type classType = Type.GetType(classToInvestigate);
+            FieldInfo[] classFields = classType.GetFields(
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static
+                | BindingFlags.NonPublic);
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            Object classInstance = Activator.CreateInstance(classType, new object[] { });
+
+            stringBuilder.AppendLine($"Class under investigation: {classToInvestigate}");
+
+            foreach (FieldInfo field in classFields.Where(f => fieldsNames.Contains(f.Name)))
+            {
+                stringBuilder.AppendLine($"{field.Name} = {field.GetValue(classInstance)}");
+            }
+
+            return stringBuilder.ToString().Trim();
+        }
+    }
+}
