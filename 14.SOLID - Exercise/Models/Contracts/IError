@@ -1,0 +1,15 @@
+using System;
+
+using _14.SOLID___Exercise.Models.Enumerations;
+
+namespace _14.SOLID___Exercise.Models.Contracts
+{
+    public interface IError
+    {
+        DateTime DateTime { get; }
+
+        string Message { get; }
+
+        Level Level { get; }
+    }
+}
