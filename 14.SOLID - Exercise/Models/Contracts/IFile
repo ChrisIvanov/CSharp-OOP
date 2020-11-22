@@ -1,0 +1,16 @@
+using System;
+
+namespace _14.SOLID___Exercise.Models.Contracts
+{
+    public interface IFile
+    {
+        string Path { get; }
+
+        long Size{ get; }
+
+        string Write(ILayout layout, IError error)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
