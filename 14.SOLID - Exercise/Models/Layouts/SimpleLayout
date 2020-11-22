@@ -1,0 +1,9 @@
+using _14.SOLID___Exercise.Models.Contracts;
+
+namespace _14.SOLID___Exercise.Models.Layouts
+{
+    public class SimpleLayout : ILayout
+    {
+        public string Format => "{0} - {1} - {2}";
+    }
+}
