@@ -1,0 +1,13 @@
+namespace _14.SOLID___Exercise.Models.Contracts
+{
+    public interface IPathManager
+    {
+        string CurrentDirectoryPath { get; }
+
+        string CurrentFilePath { get; }
+
+        string GetCurrentPath();
+
+        void EnsureDirectoryAndFileExists();
+    }
+}
