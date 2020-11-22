@@ -1,0 +1,27 @@
+using System.Text;
+
+using _14.SOLID___Exercise.Models.Contracts;
+
+namespace _14.SOLID___Exercise.Models.Layouts
+{
+    public class XmlLayouts : ILayout
+
+    {
+        public string Format => GetFormat();
+
+        private string GetFormat()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb
+                .AppendLine("<log>")
+                    .AppendLine("\t<date>{0}</date>")
+                    .AppendLine("\t<level>{1}</level>")
+                    .AppendLine("\t<message>{2}</message>")
+                .AppendLine("</log>");
+
+            return sb.ToString();
+                     
+        }
+    }
+}
