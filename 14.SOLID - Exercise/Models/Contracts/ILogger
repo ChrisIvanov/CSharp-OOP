@@ -1,0 +1,11 @@
+using System.Collections.Generic;
+
+namespace _14.SOLID___Exercise.Models.Contracts
+{
+    public interface ILogger
+    {
+        IReadOnlyCollection<IAppender> Appenders { get; }
+
+        void Log(IError error);
+    }
+}
