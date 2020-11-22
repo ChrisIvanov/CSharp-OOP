@@ -1,0 +1,14 @@
+using System;
+
+using _14.SOLID___Exercise.IOManagement.Contracts;
+
+namespace _14.SOLID___Exercise.IOManagement
+{
+    public class ConsoleReader : IReader
+    {
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
+    }
+}
