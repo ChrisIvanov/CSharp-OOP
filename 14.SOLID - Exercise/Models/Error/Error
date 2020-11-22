@@ -1,0 +1,22 @@
+using System;
+
+using _14.SOLID___Exercise.Models.Contracts;
+using _14.SOLID___Exercise.Models.Enumerations;
+
+namespace _14.SOLID___Exercise.Models.Error
+{
+    public class Error : IError
+    {
+        public Error(DateTime dateTime, string message, Level level)
+        {
+            this.DateTime = dateTime;
+            this.Message = message;
+            this.Level = level;
+        }
+        public DateTime DateTime { get; }
+
+        public string Message { get; }
+
+        public Level Level { get; }
+    }
+}
