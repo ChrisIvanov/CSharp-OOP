@@ -1,0 +1,7 @@
+namespace _14.SOLID___Exercise.IOManagement.Contracts
+{
+    public interface IReader
+    {
+        string ReadLine();
+    }
+}
