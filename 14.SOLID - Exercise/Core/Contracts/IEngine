@@ -1,0 +1,7 @@
+namespace _14.SOLID___Exercise.Core.Contracts
+{
+    public interface IEngine
+    {
+        void Run();
+    }
+}
