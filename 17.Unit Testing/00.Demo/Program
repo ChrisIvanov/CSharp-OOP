@@ -1,0 +1,14 @@
+using System;
+
+namespace Demo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person("Krstian", 10);
+
+            person.WhatsMyName();
+        }
+    }
+}
