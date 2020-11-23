@@ -1,0 +1,148 @@
+using NUnit.Framework;
+using System;
+
+namespace Tests
+{
+    public class CarTests
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        [TestCase("VW", "Golf", 10, 100)]
+        [TestCase("BMW", "3", 20, 200)]
+        public void CarConstructorShouldSetAllDataCorrectly(
+            string make,
+            string model,
+            double fuelConsumption,
+            double fuelCapasity)
+        {
+            //Arrange Act
+            Car car = new Car(
+                make: make,
+                model: model,
+                fuelConsumption: fuelConsumption,
+                fuelCapacity: fuelCapasity);
+
+            //Assert
+            Assert.AreEqual(car.Make, make);
+            Assert.AreEqual(car.Model, model);
+            Assert.AreEqual(car.FuelConsumption, fuelConsumption);
+            Assert.AreEqual(car.FuelCapacity, fuelCapasity);
+            Assert.AreEqual(car.FuelAmount, 0);
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void
+            CarConstructorShouldThrowExceptionIfMakeIsNullOrEmpty(string make)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Car(make, "model", 10, 10));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void
+            CarConstructorShouldThrowExceptionIfModelIsNullOrEmpty(string model)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Car("make", model, 10, 10));
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-10)]
+        [TestCase(-50)]
+        public void
+            CarConstructorShouldThrowExceptionIfFuelConsumptionIsBelowOrEqualToZero(double fuelConsumption)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Car("make", "model", fuelConsumption, 10));
+        }
+
+        [Test]
+        [TestCase(-10)]
+        [TestCase(-50)]
+        public void
+            CarConstructorShouldThrowExceptionIfFuelCapacityIsBelowZero
+            (double fuelAmount)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Car("make", "model", 10, fuelAmount));
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void RefuelShouldThrowExceptionWhenPassedValueIsBelowOrEqualToZero
+            (double value)
+        {
+            Car car = new Car("VW", "Golf", 10, 100);
+            Assert.Throws<ArgumentException>(() =>
+            car.Refuel(value));
+        }
+
+        [Test]
+        [TestCase(100, 150, 100)]
+        [TestCase(200, 350, 200)]
+        [TestCase(70, 100, 70)]
+        public void RefuelShouldWorkAsExpected
+            (double fuelCapacity, double fuelAmount, 
+            double expectedResult)
+        {
+            //Arrange
+            Car car = new Car("VW", "Golf", 10, fuelCapacity);
+
+            //Act
+            car.Refuel(fuelAmount);
+
+            //Assert
+            var actualResult = car.FuelAmount;
+
+            Assert.AreEqual(expectedResult, actualResult);
+
+        }
+
+        [Test]
+        [TestCase(10, 50, 505)]
+        [TestCase(15, 30, 201)]
+        public void DriveShouldThrowExceptionIfFuelAmountIsNotEnough
+            (double fuelConsumption, double refuel, double km)
+        {
+            //Arrange
+            Car car = new Car("VW", "Golf", fuelConsumption, 100);
+
+            //Act
+            car.Refuel(refuel);
+
+            //Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            car.Drive(km));
+        }
+
+        [Test]
+        [TestCase(10, 100, 50, 95)]
+        public void DriveShouldReduceFuelBasedOnDistanceDriven
+            (double fuelConsumption, double fuel, double km, double fuelAmountLeft)
+        {
+            //Arrange
+            Car car = new Car("VW", "Golf", fuelConsumption, fuel);
+            car.Refuel(100);
+
+            //Act 
+            car.Drive(50);
+
+            //Assert
+            var expectedValue = fuelAmountLeft;
+            var actualValue = car.FuelAmount;
+
+            Assert.AreEqual(expectedValue, actualValue);
+
+        }
+    }
+}
