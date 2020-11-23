@@ -1,0 +1,92 @@
+using NUnit.Framework;
+using System;
+using System.Linq;
+using FightingArena;
+
+namespace Tests
+{
+    public class ArenaTests
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        public void ConstructorShouldInitializeDependantValues()
+        {
+            Arena arena = new Arena();
+
+            Assert.NotNull(arena.Warriors);
+        }
+
+        [Test]
+        public void EnrollShouldThrowExceptionIfWarriorExists()
+        {
+            Arena arena = new Arena();
+            Warrior warrior = new Warrior("Stoyan", 10, 10);
+
+            arena.Enroll(warrior);
+
+            Assert.Throws<InvalidOperationException>(() =>
+            arena.Enroll(warrior));
+        }
+
+        [Test]
+        public void EnrollShouldAddWarriorToCollection()
+        {
+            Arena arena = new Arena();
+
+            Warrior warrior = new Warrior("Stoyan", 10, 10);
+            Warrior fighter = new Warrior("Kiro", 20, 50);
+            arena.Enroll(warrior);
+            arena.Enroll(fighter);
+
+            var expectedResult = 1;
+            var stoyanExists = arena.Warriors.Any(x => x.Name == "Stoyan");
+            var kiroExists = arena.Warriors.Any(x => x.Name == "Kiro");
+
+            Assert.AreEqual(expectedResult, arena.Count);
+            Assert.IsTrue(stoyanExists);
+            Assert.IsTrue(kiroExists);
+        }
+
+        [Test]
+        [TestCase("Gosho", "Stoyan")]
+        [TestCase("Stoyan", "Gosho")]
+        public void FightShouldThrowExceptionIfWarriorDoesntExist
+            (string attacker, string defender)
+        {
+            Arena arena = new Arena();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            arena.Fight(attacker, defender));
+
+            Warrior warrior = new Warrior(attacker, 10, 10);
+            arena.Enroll(warrior);
+
+            Assert.Throws<InvalidOperationException>(() =>
+            arena.Fight(attacker, defender));
+        }
+
+        [Test]
+        public void FightShouldWorkAsExpected()
+        {
+            Arena arena = new Arena();
+
+            Warrior warrior = new Warrior("Meridius", 10, 50);
+            Warrior defender = new Warrior("Darius", 10, 50);
+
+            arena.Enroll(warrior); 
+            arena.Enroll(defender);
+
+            arena.Fight("Meridius", "Darius");
+
+            var meridiusHp = arena.Warriors.FirstOrDefault(x => x.Name == "Meridius").HP;
+            var dariusHp = arena.Warriors.FirstOrDefault(x => x.Name == "Darius").HP;
+
+            Assert.AreEqual(meridiusHp, 40);
+            Assert.AreEqual(dariusHp, 40);
+        }
+    }
+}
