@@ -1,0 +1,98 @@
+using NUnit.Framework;
+using System;
+using FightingArena;
+
+namespace Tests
+{
+    public class WarriorTests
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        [TestCase("Ivan", 10, 10)]
+        [TestCase("Bratan", 20, 30)]
+        [TestCase("Gosho", 20, 0)]
+        public void WarriorConstructorShouldsSetDataProperly
+            (string name, int dmg, int hp)
+        {
+            Warrior warrior = new Warrior(name, dmg, hp);
+
+            Assert.AreEqual(name, warrior.Name);
+            Assert.AreEqual(dmg, warrior.Damage);
+            Assert.AreEqual(hp, warrior.HP);
+        }
+
+        [Test]
+        [TestCase("", 10, 10)]
+        [TestCase(" ", 20, 30)]
+        [TestCase(null, 20, 20)]
+        public void WarriorConstructorShouldThrowExceptionIfInvalidNameIsPassed
+            (string name, int dmg, int hp)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Warrior(name, dmg, hp));
+        }
+
+        [Test]
+        [TestCase("Zohan", 0, 10)]
+        [TestCase("Bratan", -10, 30)]
+        public void WarriorConstructorShouldThrowExceptionIfInvalidDamageIsPassed
+            (string name, int dmg, int hp)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Warrior(name, dmg, hp));
+        }
+
+        [Test]
+        [TestCase("Bratan", -1, 30)]
+        public void WarriorConstructorShouldThrowExceptionIfInvalidHPIsPassed
+            (string name, int dmg, int hp)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            new Warrior(name, dmg, hp));
+        }
+
+
+        [Test]
+        [TestCase("Zohan", 10, 10, "Bratan", 10, 30)]
+        [TestCase("Zohan", 10, 100, "Bratan", 10, 30)]
+        [TestCase("Zohan", 10, 50, "Bratan", 100, 50)]
+        public void
+            WarriorOperationShouldThrowInvalidOperationExceptionIfHpIsInvalid
+            (string attackerName, int attackerDmg, int attackerHp,
+            string defenderName, int defenderDmg, int defenderHp)
+        {
+            var attacker = new Warrior(attackerName, attackerDmg, attackerHp);
+            var defender = new Warrior(defenderName, defenderDmg, defenderHp);
+
+            Assert.Throws<InvalidOperationException>(() =>
+            attacker.Attack(defender));
+        }
+
+        [Test]
+        [TestCase("Zohan", 10, 50, 40, "Bratan", 10, 50, 40)]
+        [TestCase("Zohan", 20, 100, 90, "Bratan", 10, 70, 50)]
+        public void WarriorAttackOperationShouldDecreaseHp
+            (string attackerName, int attackerDmg, int attackerHp, int attackerHpLeft,
+            string defenderName, int defenderDmg, int defenderHp, int defenderHpLeft)
+        {
+            //Arrange
+            var attacker = new Warrior(attackerName, attackerDmg, attackerHp);
+            var defender = new Warrior(defenderName, defenderDmg, defenderHp);
+
+            //Act
+            attacker.Attack(defender);
+
+            //Assert
+            var expectedAttackerHp = attackerHpLeft;
+            var expectedDefenderHp = defenderHpLeft;
+
+            Assert.AreEqual(expectedAttackerHp, attacker.HP);
+            Assert.AreEqual(expectedDefenderHp, defender.HP);
+
+        }
+    }
+}
